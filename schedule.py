@@ -58,8 +58,7 @@ df = pd.DataFrame(zipped_list, columns=columns)
 
 #print(df)
 
-replacement = 'Marketing strategiczny'
-df['Przedmiot'] = df['Przedmiot'].replace(replacement, np.nan)
+df['Przedmiot'] = df['Przedmiot'].apply(lambda x: np.nan if x.startswith('Marketing') else x)
 df = df.dropna().reset_index(level=0)
 
 #df.to_csv('schedulee.csv')
