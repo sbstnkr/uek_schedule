@@ -45,8 +45,10 @@ for index, row in enumerate(bs.find_all('tr')):
         utc_time = local_time.astimezone(utc_zone)
         utc_string = utc_time.strftime('%Y-%m-%d %H:%M:%S')
         end_times.append(utc_string)
-        subject = row.find_all('td')[-4]
-        subjects.append(subject.text.strip())
+        subject = row.find_all('td')[-4].text.strip()
+        typed = row.find_all('td')[-3].text.strip().split(' ')[0]
+        subject = subject + ' - ' + typed
+        subjects.append(subject)
         teacher = row.find_all('td')[-2]
         teachers.append(teacher.text.strip())
 
@@ -60,11 +62,9 @@ replacement = 'Marketing strategiczny'
 df['Przedmiot'] = df['Przedmiot'].replace(replacement, np.nan)
 df = df.dropna().reset_index(level=0)
 
-
-df.to_csv('schedulee.csv')
+#df.to_csv('schedulee.csv')
 
 c = Calendar()
-
 
 for index, row in df.iterrows():
     e = Event()
